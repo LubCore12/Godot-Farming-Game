@@ -1011,5 +1011,16 @@ position = Vector2(-405, 64)
 [node name="Plants" type="Node2D" parent="Objects" unique_id=1277217281]
 y_sort_enabled = true
 
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1712004612]
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer" unique_id=729256668]
+modulate = Color(1, 1, 1, 0)
+self_modulate = Color(0, 0, 0, 1)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
 [connection signal="seed_use" from="Objects/Player" to="." method="_on_player_seed_use"]
 [connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

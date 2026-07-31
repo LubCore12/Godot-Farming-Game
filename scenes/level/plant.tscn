@@ -4,9 +4,12 @@
 [ext_resource type="Script" uid="uid://bngs0y1yoocdy" path="res://scenes/scripts/plant.gd" id="2_x6yfg"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_tt4jj"]
-size = Vector2(5, 6)
+size = Vector2(6, 6)
 
-[node name="Plant" type="StaticBody2D" unique_id=1871417352]
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_37okk"]
+size = Vector2(12, 28)
+
+[node name="Plant" type="StaticBody2D" unique_id=1871417352 groups=["Plants"]]
 script = ExtResource("2_x6yfg")
 
 [node name="Sprite" type="Sprite2D" parent="." unique_id=279923058]
@@ -15,5 +18,15 @@ texture = ExtResource("1_tt4jj")
 hframes = 4
 
 [node name="Shape" type="CollisionShape2D" parent="." unique_id=247709301]
-position = Vector2(0.5, 4)
+position = Vector2(0, 4)
 shape = SubResource("RectangleShape2D_tt4jj")
+
+[node name="Area2D" type="Area2D" parent="." unique_id=496037395]
+collision_layer = 4
+collision_mask = 2
+
+[node name="Shape" type="CollisionShape2D" parent="Area2D" unique_id=1241356285]
+position = Vector2(0, -4)
+shape = SubResource("RectangleShape2D_37okk")
+
+[connection signal="body_entered" from="Area2D" to="." method="_on_area_2d_body_entered"]

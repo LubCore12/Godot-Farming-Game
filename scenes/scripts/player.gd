@@ -7,12 +7,14 @@ $AnimationTree.get("parameters/MoveStateMachine/playback")
 $AnimationTree.get("parameters/ToolStateMachine/playback")
 
 enum Tools {HOE, AXE, WATER}
-var current_tool: Tools = Tools.AXE
+var current_tool: Tools = Tools.HOE
 const TOOL_COLLECTION = {
 	Tools.HOE: "Hoe",
 	Tools.AXE: "Axe",
 	Tools.WATER: "Water"
 }
+
+var current_seed: Global.Seeds = Global.Seeds.CORN
 
 var direction: Vector2
 var last_direction: Vector2
@@ -25,6 +27,7 @@ var can_move := true
 @export var tool_y_offset: int
 
 signal tool_use(tool: Tools, pos: Vector2)
+signal seed_use(seed: Global.Seeds, pos: Vector2)
 
 func _physics_process(_delta: float) -> void:
 	if direction:
@@ -52,6 +55,21 @@ func get_input() -> void:
 	if Input.is_action_just_pressed("tool_forward") or Input.is_action_just_pressed("tool_backward"):
 		var tool_axis = Input.get_axis("tool_backward", "tool_forward")
 		current_tool = posmod(current_tool + tool_axis, Tools.size()) as Tools
+		
+	if Input.is_action_just_pressed("seed_toggle"):
+		current_seed = posmod(current_seed + 1, Global.Seeds.size()) as Global.Seeds
+		print(current_seed)
+		
+	if Input.is_action_just_pressed("plant"):
+		can_move = false
+		direction = Vector2.ZERO
+		seed_use.emit(current_seed, 
+			 (position + 
+			  last_direction * 
+			  tool_direction_offset + 
+			  Vector2(0, -tool_y_offset)))
+		await get_tree().create_timer(0.5).timeout
+		can_move = true
 
 func animation() -> void:
 	var target_vector: Vector2 = Vector2(round(direction.x), round(direction.y))

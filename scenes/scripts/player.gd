@@ -15,12 +15,20 @@ const TOOL_COLLECTION = {
 }
 
 var direction: Vector2
+var last_direction: Vector2
 var can_move := true
 
 @export_group("Movement")
 @export var speed: int
+@export_group("Tools")
+@export var tool_direction_offset: int
+@export var tool_y_offset: int
+
+signal tool_use(tool: Tools, pos: Vector2)
 
 func _physics_process(_delta: float) -> void:
+	if direction:
+		last_direction = direction
 	if can_move:
 		get_input()
 		velocity = direction * speed
@@ -36,6 +44,8 @@ func get_input() -> void:
 							AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
 		can_move = false
 		await $AnimationTree.animation_finished
+		if current_tool in [Tools.HOE, Tools.WATER]:
+			call_use_tool()
 		can_move = true
 		
 	
@@ -53,3 +63,13 @@ func animation() -> void:
 			$AnimationTree.set("parameters/ToolStateMachine/{state}/blend_position".format({"state": state}), target_vector)
 	else:
 		move_state_machine.travel("Idle")
+
+func call_use_tool() -> void:
+	tool_use.emit(current_tool, 
+				 (position + 
+				  last_direction * 
+				  tool_direction_offset + 
+				  Vector2(0, -tool_y_offset)))
+
+func axe_use() -> void:
+	call_use_tool()

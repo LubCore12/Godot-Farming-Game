@@ -1,9 +1,11 @@
 [gd_scene format=4 uid="uid://bf0yuue48pk6v"]
 
 [ext_resource type="PackedScene" uid="uid://ca106qafnt25o" path="res://scenes/player/player.tscn" id="1_e6yxx"]
+[ext_resource type="Script" uid="uid://cipqxveyuipf0" path="res://scenes/scripts/game.gd" id="1_fq6ga"]
 [ext_resource type="Texture2D" uid="uid://b134tjp5ngghx" path="res://graphics/tilesets/water.png" id="1_qrcxb"]
 [ext_resource type="Texture2D" uid="uid://c15lysgtp52wu" path="res://graphics/tilesets/soil.png" id="2_qhoho"]
 [ext_resource type="Texture2D" uid="uid://dcwcdle3cjkv6" path="res://graphics/tilesets/hills.png" id="3_qrcxb"]
+[ext_resource type="Texture2D" uid="uid://byfag0kgqavgo" path="res://graphics/tilesets/soil_water.png" id="4_f2w0s"]
 [ext_resource type="PackedScene" uid="uid://doi42nnng73e" path="res://scenes/level/tree.tscn" id="4_qhoho"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_fq6ga"]
@@ -107,6 +109,7 @@ texture = SubResource("CompressedTexture2D_qhoho")
 1:1/0/terrains_peering_bit/top_left_corner = 0
 1:1/0/terrains_peering_bit/top_side = 0
 1:1/0/terrains_peering_bit/top_right_corner = 0
+1:1/0/custom_data_0 = true
 2:1/0 = 0
 2:1/0/terrain_set = 0
 2:1/0/terrain = 0
@@ -327,6 +330,7 @@ texture = SubResource("CompressedTexture2D_qhoho")
 0:4/0/terrains_peering_bit/top_left_corner = 0
 0:4/0/terrains_peering_bit/top_side = 0
 0:4/0/terrains_peering_bit/top_right_corner = 0
+0:4/0/custom_data_0 = true
 1:4/0 = 0
 1:4/0/terrain_set = 0
 1:4/0/terrain = 0
@@ -339,6 +343,7 @@ texture = SubResource("CompressedTexture2D_qhoho")
 1:4/0/terrains_peering_bit/top_left_corner = 0
 1:4/0/terrains_peering_bit/top_side = 0
 1:4/0/terrains_peering_bit/top_right_corner = 0
+1:4/0/custom_data_0 = true
 2:4/0 = 0
 2:4/0/terrain_set = 0
 2:4/0/terrain = 0
@@ -351,6 +356,7 @@ texture = SubResource("CompressedTexture2D_qhoho")
 2:4/0/terrains_peering_bit/top_left_corner = 0
 2:4/0/terrains_peering_bit/top_side = 0
 2:4/0/terrains_peering_bit/top_right_corner = 0
+2:4/0/custom_data_0 = true
 3:4/0 = 0
 3:4/0/terrain_set = 0
 3:4/0/terrain = 0
@@ -363,6 +369,7 @@ texture = SubResource("CompressedTexture2D_qhoho")
 3:4/0/terrains_peering_bit/top_left_corner = 0
 3:4/0/terrains_peering_bit/top_side = 0
 3:4/0/terrains_peering_bit/top_right_corner = 0
+3:4/0/custom_data_0 = true
 4:4/0 = 0
 4:4/0/terrain_set = 0
 4:4/0/terrain = 0
@@ -412,6 +419,8 @@ texture = SubResource("CompressedTexture2D_qhoho")
 terrain_set_0/mode = 0
 terrain_set_0/terrain_0/name = "Main"
 terrain_set_0/terrain_0/color = Color(0.8581774, 0, 0.1825616, 1)
+custom_data_layer_0/name = "usable"
+custom_data_layer_0/type = 1
 sources/0 = SubResource("TileSetAtlasSource_qhoho")
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qrcxb"]
@@ -804,6 +813,24 @@ terrain_set_0/terrain_0/name = "Main"
 terrain_set_0/terrain_0/color = Color(0.70980394, 0, 0, 1)
 sources/0 = SubResource("TileSetAtlasSource_qrcxb")
 
+[sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_3ny2s"]
+texture = ExtResource("4_f2w0s")
+0:0/0 = 0
+0:0/0/terrain_set = 0
+0:0/0/terrain = 0
+1:0/0 = 0
+1:0/0/terrain_set = 0
+1:0/0/terrain = 0
+2:0/0 = 0
+2:0/0/terrain_set = 0
+2:0/0/terrain = 0
+
+[sub_resource type="TileSet" id="TileSet_b5fsu"]
+terrain_set_0/mode = 0
+terrain_set_0/terrain_0/name = "Main"
+terrain_set_0/terrain_0/color = Color(0.78039217, 0, 0, 1)
+sources/0 = SubResource("TileSetAtlasSource_3ny2s")
+
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_f2w0s"]
 texture = ExtResource("3_qrcxb")
 0:0/0 = 0
@@ -843,6 +870,7 @@ physics_layer_0/collision_mask = 0
 sources/0 = SubResource("TileSetAtlasSource_f2w0s")
 
 [node name="Game" type="Node2D" unique_id=1987908076]
+script = ExtResource("1_fq6ga")
 metadata/_edit_horizontal_guides_ = [-312.0]
 
 [node name="Objects" type="Node2D" parent="." unique_id=901721803]
@@ -865,6 +893,10 @@ tile_set = SubResource("TileSet_37okk")
 [node name="SoilLayer" type="TileMapLayer" parent="Objects/Layers" unique_id=1824110410]
 y_sort_enabled = true
 tile_set = SubResource("TileSet_fo3dt")
+
+[node name="SoilWaterLayer" type="TileMapLayer" parent="Objects/Layers" unique_id=2100067732]
+y_sort_enabled = true
+tile_set = SubResource("TileSet_b5fsu")
 
 [node name="HillsLayer" type="TileMapLayer" parent="Objects/Layers" unique_id=1329284002]
 y_sort_enabled = true
@@ -975,3 +1007,5 @@ position = Vector2(-502, 9)
 
 [node name="Tree16" parent="Objects/Trees" unique_id=907463262 instance=ExtResource("4_qhoho")]
 position = Vector2(-405, 64)
+
+[connection signal="tool_use" from="Objects/Player" to="." method="_on_player_tool_use"]

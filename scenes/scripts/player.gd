@@ -41,10 +41,22 @@ func _physics_process(_delta: float) -> void:
 func get_input() -> void:
 	direction = Input.get_vector("left", "right", "up", "down")
 	
+	if direction and not $Audio/StepSound.playing:
+		$Audio/StepSound.play()
+	
 	if Input.is_action_just_pressed("action"):
 		tool_state_machine.travel(TOOL_COLLECTION[current_tool])
 		$AnimationTree.set("parameters/OneShot/request", 
 							AnimationNodeOneShot.ONE_SHOT_REQUEST_FIRE)
+							
+		match current_tool:
+			Tools.HOE:
+				$Audio/Hoe.play()
+			Tools.AXE:
+				$Audio/Axe.play()
+			Tools.WATER:
+				$Audio/Water.play()
+		
 		can_move = false
 		await $AnimationTree.animation_finished
 		if current_tool in [Tools.HOE, Tools.WATER]:

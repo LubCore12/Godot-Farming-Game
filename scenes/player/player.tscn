@@ -2,6 +2,10 @@
 
 [ext_resource type="Script" uid="uid://dqpuxdnc0n8ya" path="res://scenes/scripts/player.gd" id="1_dovo2"]
 [ext_resource type="Texture2D" uid="uid://dpfxibevth7y" path="res://graphics/characters/player_animations.png" id="2_yewv4"]
+[ext_resource type="AudioStream" uid="uid://dtsnwvwr5w013" path="res://audio/axe.wav" id="3_p47bc"]
+[ext_resource type="AudioStream" uid="uid://bxbb5os8ycr5w" path="res://audio/hoe.wav" id="4_75vfm"]
+[ext_resource type="AudioStream" uid="uid://b1sbhvfoqd0u1" path="res://audio/water.ogg" id="5_0owmy"]
+[ext_resource type="AudioStream" uid="uid://dff6xghytlqqh" path="res://audio/step.mp3" id="6_75vfm"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_yewv4"]
 radius = 5.0
@@ -1022,3 +1026,17 @@ parameters/OneShot/request = 0
 process_callback = 0
 position_smoothing_enabled = true
 position_smoothing_speed = 15.0
+
+[node name="Audio" type="Node2D" parent="." unique_id=2034101752]
+
+[node name="Axe" type="AudioStreamPlayer2D" parent="Audio" unique_id=525496190]
+stream = ExtResource("3_p47bc")
+
+[node name="Water" type="AudioStreamPlayer2D" parent="Audio" unique_id=937856902]
+stream = ExtResource("5_0owmy")
+
+[node name="StepSound" type="AudioStreamPlayer2D" parent="Audio" unique_id=240581364]
+stream = ExtResource("6_75vfm")
+
+[node name="Hoe" type="AudioStreamPlayer2D" parent="Audio" unique_id=456990515]
+stream = ExtResource("4_75vfm")

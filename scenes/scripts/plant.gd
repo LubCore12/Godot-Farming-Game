@@ -32,7 +32,7 @@ func setup(seed_enum: Global.Seeds, grid_position: Vector2i) -> void:
 
 func grow(watered: bool) -> void:
 	if watered:
-		age = 	min(age + grow_speed, max_age)
+		age = min(age + grow_speed, max_age)
 		$Sprite.frame = int(age)
 
 func _on_area_2d_body_entered(_body: Node2D) -> void:

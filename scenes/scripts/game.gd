@@ -6,7 +6,11 @@ extends Node2D
 @onready var grass_layer = $Objects/Layers/GrassLayer as TileMapLayer
 var plant_scene: PackedScene = preload("res://scenes/level/plant.tscn")
 
+@export var daytime_gradient: Gradient
+
 func _process(_delta: float) -> void:
+	var daytime_point: float = 1.0 - $DayTimer.time_left / $DayTimer.wait_time
+	$CanvasModulate.color = daytime_gradient.sample(daytime_point)
 	if Input.is_action_just_pressed("ui_focus_next"):
 		day_switch()
 
@@ -51,4 +55,5 @@ func day_switch() -> void:
 func level_reset() -> void:
 	for plant in get_tree().get_nodes_in_group("Plants"):
 		plant.grow(plant.grid_pos in soil_water_layer.get_used_cells())
-		soil_water_layer.clear()
+	soil_water_layer.clear()
+	$DayTimer.start()
